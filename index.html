@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>startup map</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
+    <link rel="icon" href="./location_map_directions_geography_gps_icon-icons.com_55988.ico">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 5rem;
+            padding: 0;
+            width: 100vh;
+            height: 100vh;
+            position: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #map {
+            position: flex;
+            width: 70rem;
+            height: 30rem;
+        }
+    </style>
+</head>
+
+<body>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
+        type="text/css">
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2hhZGEtZmF0aGltYSIsImEiOiJjbDNmZGc4bG0wM3F2M2pwaXA4Zmc5YjR6In0.ayBs4mFgsEMkb7JMC5K2fg';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [75.7673, 11.2626], // starting position [lng, lat]
+            zoom: 9 // starting zoom
+        });
+        // Add zoom and rotation controls to the map.
+        map.addControl(new mapboxgl.NavigationControl());
+
+        // Add geolocate control to the map.
+        map.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                // When active the map will receive updates to the device's location as it changes.
+                trackUserLocation: true,
+                // Draw an arrow next to the location dot to indicate which direction the device is heading.
+                showUserHeading: true
+            })
+        );
+        map.addControl(
+            new MapboxDirections({
+                accessToken: mapboxgl.accessToken
+            }),
+            'top-left'
+        );
+        // Set an event listener that fires
+        // when a trackuserlocationstart event occurs.
+        geolocate.on('trackuserlocationstart', () => {
+            console.log('A trackuserlocationstart event has occurred.');
+        });
+
+
+
+    </script>
+</body>
+
+</html>
